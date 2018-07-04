@@ -1,0 +1,16 @@
+{
+  "search.exclude": {
+    "**/.history": true,
+    ".history/**": true
+  },
+  "editor.formatOnSave": true,
+  "[terraform]": {
+    "editor.formatOnSave": true
+  },
+  "terraform.indexing": {
+    "enabled": true,
+    "liveIndexing": true,
+    "delay": 500,
+    "exclude": [".terraform/**/*", ".history/**/*"]
+  }
+}
