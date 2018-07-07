@@ -26,7 +26,7 @@ jobs:
         command: docker-compose run ssh terraform plan -out=./output.tfplan
       - run:
         name: Run terraform apply
-        command: docker-compose run ssh terraform apply output.tfplan
+        command: docker-compose run ssh terraform apply output.tfplan -auto-approve
       - run:
         name: Clear garbage
         command: rm output.tfplan

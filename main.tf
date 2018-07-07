@@ -1,10 +1,24 @@
-variable "POSTGRES_USER" {}
+#####################################################################
+# Production
+#####################################################################
+variable "GENERAL_USER" {}
 
-variable "POSTGRES_PASSWORD" {}
+variable "GENERAL_PASSWORD" {}
 
 module "soundplace" {
-  source = "./prod"
+  source = "./modules"
 
-  POSTGRES_USER     = "${var.POSTGRES_USER}"
-  POSTGRES_PASSWORD = "${var.POSTGRES_PASSWORD}"
+  project  = "soundplace-infra"
+  region   = "us-central1"
+  username = "${var.GENERAL_USER}"
+  password = "${var.GENERAL_PASSWORD}"
+}
+
+# Bucket for tfstate
+terraform {
+  backend "gcs" {
+    bucket  = "soundplace-tfstate"
+    project = "soundplace-infra"
+    key     = "terraform.tfstate"
+  }
 }

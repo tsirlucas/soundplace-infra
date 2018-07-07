@@ -13,3 +13,6 @@ terraform.tfvars
 
 # env vars
 .env
+
+# secrets
+secrets
