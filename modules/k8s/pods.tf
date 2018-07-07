@@ -24,7 +24,7 @@ resource "kubernetes_replication_controller" "stream-api-master" {
         name  = "master"
 
         port {
-          container_port = 1337
+          container_port = 3001
         }
 
         resources {
@@ -64,7 +64,7 @@ resource "kubernetes_replication_controller" "stream-api-slave" {
         name  = "slave"
 
         port {
-          container_port = 1337
+          container_port = 3001
         }
 
         env {
@@ -109,7 +109,7 @@ resource "kubernetes_replication_controller" "data-api-master" {
         name  = "master"
 
         port {
-          container_port = 6379
+          container_port = 3000
         }
 
         resources {
@@ -149,7 +149,7 @@ resource "kubernetes_replication_controller" "data-api-slave" {
         name  = "slave"
 
         port {
-          container_port = 6379
+          container_port = 3000
         }
 
         env {

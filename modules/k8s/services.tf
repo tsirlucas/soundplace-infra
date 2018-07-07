@@ -17,8 +17,8 @@ resource "kubernetes_service" "stream-master" {
     }
 
     port {
-      port        = 1337
-      target_port = 1337
+      port        = 3001
+      target_port = 3001
     }
   }
 }
@@ -42,8 +42,8 @@ resource "kubernetes_service" "stream-slave" {
     }
 
     port {
-      port        = 1337
-      target_port = 1337
+      port        = 3001
+      target_port = 3001
     }
   }
 }
@@ -67,8 +67,8 @@ resource "kubernetes_service" "data-master" {
     }
 
     port {
-      port        = 6379
-      target_port = 6379
+      port        = 3000
+      target_port = 3000
     }
   }
 }
@@ -92,8 +92,8 @@ resource "kubernetes_service" "data-slave" {
     }
 
     port {
-      port        = 6379
-      target_port = 6379
+      port        = 3000
+      target_port = 3000
     }
   }
 }

@@ -8,3 +8,4 @@ variable "region" {}
 variable "username" {}
 
 variable "password" {}
+variable "credentials" {}

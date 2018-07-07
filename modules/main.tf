@@ -8,15 +8,18 @@ variable "password" {}
 variable "project" {}
 variable "region" {}
 
+variable "credentials" {}
+
 #####################################################################
 # Modules
 #####################################################################
 module "gke" {
-  source   = "./gke"
-  project  = "${var.project}"
-  region   = "${var.region}"
-  username = "${var.username}"
-  password = "${var.password}"
+  source      = "./gke"
+  project     = "${var.project}"
+  region      = "${var.region}"
+  username    = "${var.username}"
+  password    = "${var.password}"
+  credentials = "${var.credentials}"
 }
 
 module "k8s" {
