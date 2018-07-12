@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: gateway-ingress-address
+    ingress.gcp.kubernetes.io/pre-shared-cert: "gateway-cert"
+spec:
+  backend:
+    serviceName: gateway-api-service
+    servicePort: 80

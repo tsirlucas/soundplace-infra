@@ -1,167 +1,51 @@
-resource "kubernetes_replication_controller" "stream-api-master" {
+resource "kubernetes_replication_controller" "data-api" {
   metadata {
-    name = "stream-api-master"
+    name = "data-api-pod"
 
     labels {
-      app  = "stream"
-      role = "master"
-      tier = "api"
+      app = "data-api-pod"
     }
   }
 
   spec {
-    replicas = 1
-
     selector = {
-      app  = "stream"
-      role = "master"
-      tier = "api"
-    }
-
-    template {
-      container {
-        image = "tsirlucas/youtube-cacheable-audio-stream:latest"
-        name  = "master"
-
-        port {
-          container_port = 3001
-        }
-
-        resources {
-          requests {
-            cpu    = "100m"
-            memory = "100Mi"
-          }
-        }
-      }
-    }
-  }
-}
-
-resource "kubernetes_replication_controller" "stream-api-slave" {
-  metadata {
-    name = "stream-api-slave"
-
-    labels {
-      app  = "stream-api"
-      role = "slave"
-      tier = "api"
-    }
-  }
-
-  spec {
-    replicas = 2
-
-    selector = {
-      app  = "stream-api"
-      role = "slave"
-      tier = "api"
-    }
-
-    template {
-      container {
-        image = "tsirlucas/youtube-cacheable-audio-stream:latest"
-        name  = "slave"
-
-        port {
-          container_port = 3001
-        }
-
-        env {
-          name  = "GET_HOSTS_FROM"
-          value = "dns"
-        }
-
-        resources {
-          requests {
-            cpu    = "100m"
-            memory = "100Mi"
-          }
-        }
-      }
-    }
-  }
-}
-
-resource "kubernetes_replication_controller" "data-api-master" {
-  metadata {
-    name = "data-api-master"
-
-    labels {
-      app  = "data"
-      role = "master"
-      tier = "api"
-    }
-  }
-
-  spec {
-    replicas = 1
-
-    selector = {
-      app  = "data"
-      role = "master"
-      tier = "api"
+      app = "data-api-pod"
     }
 
     template {
       container {
         image = "tsirlucas/soundplace-api:latest"
-        name  = "master"
+        name  = "data-api"
 
         port {
           container_port = 3000
-        }
-
-        resources {
-          requests {
-            cpu    = "100m"
-            memory = "100Mi"
-          }
         }
       }
     }
   }
 }
 
-resource "kubernetes_replication_controller" "data-api-slave" {
+resource "kubernetes_replication_controller" "stream-api" {
   metadata {
-    name = "data-api-slave"
+    name = "stream-api-pod"
 
     labels {
-      app  = "soundplace-api"
-      role = "slave"
-      tier = "api"
+      app = "stream-api-pod"
     }
   }
 
   spec {
-    replicas = 2
-
     selector = {
-      app  = "data-api"
-      role = "slave"
-      tier = "api"
+      app = "stream-api-pod"
     }
 
     template {
       container {
-        image = "tsirlucas/soundplace-api:latest"
-        name  = "slave"
+        image = "tsirlucas/youtube-cacheable-audio-stream:latest"
+        name  = "stream-api"
 
         port {
-          container_port = 3000
-        }
-
-        env {
-          name  = "GET_HOSTS_FROM"
-          value = "dns"
-        }
-
-        resources {
-          requests {
-            cpu    = "100m"
-            memory = "100Mi"
-          }
+          container_port = 3001
         }
       }
     }

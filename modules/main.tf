@@ -27,6 +27,8 @@ module "k8s" {
   host     = "${module.gke.host}"
   username = "${var.username}"
   password = "${var.password}"
+  region   = "${var.region}"
+  project  = "soundplace-infra"
 
   client_certificate     = "${module.gke.client_certificate}"
   client_key             = "${module.gke.client_key}"

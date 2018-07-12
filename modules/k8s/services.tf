@@ -1,99 +1,37 @@
-resource "kubernetes_service" "stream-master" {
+resource "kubernetes_service" "data-api" {
   metadata {
-    name = "stream-master"
-
-    labels {
-      app  = "stream"
-      role = "master"
-      tier = "api"
-    }
+    name = "data-api-service"
   }
 
   spec {
     selector {
-      app  = "stream"
-      role = "master"
-      tier = "api"
+      app = "${kubernetes_replication_controller.data-api.metadata.0.labels.app}"
     }
 
     port {
-      port        = 3001
-      target_port = 3001
-    }
-  }
-}
-
-resource "kubernetes_service" "stream-slave" {
-  metadata {
-    name = "stream-slave"
-
-    labels {
-      app  = "stream"
-      role = "slave"
-      tier = "api"
-    }
-  }
-
-  spec {
-    selector {
-      app  = "stream"
-      role = "slave"
-      tier = "api"
-    }
-
-    port {
-      port        = 3001
-      target_port = 3001
-    }
-  }
-}
-
-resource "kubernetes_service" "data-master" {
-  metadata {
-    name = "data-master"
-
-    labels {
-      app  = "data"
-      role = "master"
-      tier = "api"
-    }
-  }
-
-  spec {
-    selector {
-      app  = "data"
-      role = "master"
-      tier = "api"
-    }
-
-    port {
-      port        = 3000
+      port        = 80
       target_port = 3000
     }
+
+    type = "LoadBalancer"
   }
 }
 
-resource "kubernetes_service" "data-slave" {
+resource "kubernetes_service" "stream-api" {
   metadata {
-    name = "data-slave"
-
-    labels {
-      app  = "data"
-      role = "slave"
-      tier = "api"
-    }
+    name = "stream-api-service"
   }
 
   spec {
     selector {
-      app  = "data"
-      role = "slave"
-      tier = "api"
+      app = "${kubernetes_replication_controller.stream-api.metadata.0.labels.app}"
     }
 
     port {
-      port        = 3000
-      target_port = 3000
+      port        = 80
+      target_port = 3001
     }
+
+    type = "LoadBalancer"
   }
 }

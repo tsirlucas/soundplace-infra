@@ -16,4 +16,4 @@ output.tfplan
 .env
 
 # secrets
-secrets
+.secrets
