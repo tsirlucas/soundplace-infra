@@ -6,29 +6,29 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Install curl & sudo
-        command: apk update && apk add --no-cache curl sudo
+          name: Install curl & sudo
+          command: apk update && apk add --no-cache curl sudo
       - run:
-        name: Install Docker Compose
-        command: |
-          curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-          chmod +x ~/docker-compose
-          sudo mv ~/docker-compose /usr/local/bin/docker-compose
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
       - run:
-        name: Build ssh image
-        command: docker-compose build
+          name: Build ssh image
+          command: docker-compose build
       - run:
-        name: Run terraform init
-        command: docker-compose run ssh terraform init
+          name: Run terraform init
+          command: docker-compose run ssh terraform init
       - run:
-        name: Run terraform plan
-        command: docker-compose run ssh terraform plan -out=./output.tfplan
+          name: Run terraform plan
+          command: docker-compose run ssh terraform plan -out=./output.tfplan
       - run:
-        name: Run terraform apply
-        command: docker-compose run ssh terraform apply output.tfplan -auto-approve
+          name: Run terraform apply
+          command: docker-compose run ssh terraform apply output.tfplan -auto-approve
       - run:
-        name: Clear garbage
-        command: rm output.tfplan
+          name: Clear garbage
+          command: rm output.tfplan
 workflows:
   version: 2
   deploy:
