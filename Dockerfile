@@ -2,12 +2,13 @@ FROM alpine
 
 WORKDIR app
 
+COPY .secrets ./.secrets
+
 ENV TERRAFORM_VERSION=0.11.7
 ENV KUBECTL_VERSION=1.11.0
 ENV GCLOUD_SDK_VERSION=207.0.0
 ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
-
-COPY .secrets ./.secrets
+ENV GOOGLE_APPLICATION_CREDENTIALS=./.secrets/gcloud_auth.json
 
 # Needed linux tools
 RUN apk --no-cache add \
