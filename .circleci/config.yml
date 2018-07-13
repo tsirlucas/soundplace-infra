@@ -29,3 +29,8 @@ jobs:
       - run:
         name: Clear garbage
         command: rm output.tfplan
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy
