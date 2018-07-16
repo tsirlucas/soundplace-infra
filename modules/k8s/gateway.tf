@@ -5,16 +5,16 @@ resource "google_compute_global_address" "gateway-ingress-address" {
 
 resource "kubernetes_replication_controller" "gateway-api" {
   metadata {
-    name = "gateway-api-pod"
+    name = "gateway-api-rc"
 
     labels {
-      app = "gateway-api-pod"
+      app = "gateway-api-rc"
     }
   }
 
   spec {
     selector = {
-      app = "gateway-api-pod"
+      app = "gateway-api-rc"
     }
 
     template {

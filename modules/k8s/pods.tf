@@ -1,15 +1,15 @@
 resource "kubernetes_replication_controller" "auth-api" {
   metadata {
-    name = "auth-api-pod"
+    name = "auth-api-rc"
 
     labels {
-      app = "auth-api-pod"
+      app = "auth-api-rc"
     }
   }
 
   spec {
     selector = {
-      app = "auth-api-pod"
+      app = "auth-api-rc"
     }
 
     template {
@@ -37,16 +37,16 @@ resource "kubernetes_replication_controller" "auth-api" {
 
 resource "kubernetes_replication_controller" "data-api" {
   metadata {
-    name = "data-api-pod"
+    name = "data-api-rc"
 
     labels {
-      app = "data-api-pod"
+      app = "data-api-rc"
     }
   }
 
   spec {
     selector = {
-      app = "data-api-pod"
+      app = "data-api-rc"
     }
 
     template {
@@ -64,16 +64,16 @@ resource "kubernetes_replication_controller" "data-api" {
 
 resource "kubernetes_replication_controller" "stream-api" {
   metadata {
-    name = "stream-api-pod"
+    name = "stream-api-rc"
 
     labels {
-      app = "stream-api-pod"
+      app = "stream-api-rc"
     }
   }
 
   spec {
     selector = {
-      app = "stream-api-pod"
+      app = "stream-api-rc"
     }
 
     template {
