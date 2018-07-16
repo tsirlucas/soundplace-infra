@@ -1,3 +1,22 @@
+resource "kubernetes_service" "auth-api" {
+  metadata {
+    name = "auth-api-service"
+  }
+
+  spec {
+    selector {
+      app = "${kubernetes_replication_controller.auth-api.metadata.0.labels.app}"
+    }
+
+    port {
+      port        = 80
+      target_port = 3003
+    }
+
+    type = "LoadBalancer"
+  }
+}
+
 resource "kubernetes_service" "data-api" {
   metadata {
     name = "data-api-service"

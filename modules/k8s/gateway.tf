@@ -27,6 +27,11 @@ resource "kubernetes_replication_controller" "gateway-api" {
         }
 
         env {
+          name  = "AUTH_API_ENDPOINT"
+          value = "${kubernetes_service.auth-api.load_balancer_ingress.0.ip}"
+        }
+
+        env {
           name  = "DATA_API_ENDPOINT"
           value = "${kubernetes_service.data-api.load_balancer_ingress.0.ip}"
         }

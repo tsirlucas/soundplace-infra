@@ -1,3 +1,40 @@
+resource "kubernetes_replication_controller" "auth-api" {
+  metadata {
+    name = "auth-api-pod"
+
+    labels {
+      app = "auth-api-pod"
+    }
+  }
+
+  spec {
+    selector = {
+      app = "auth-api-pod"
+    }
+
+    template {
+      container {
+        image = "tsirlucas/soundplace-auth:latest"
+        name  = "auth-api"
+
+        port {
+          container_port = 3003
+        }
+
+        env {
+          name  = "API_URL"
+          value = "https://${var.domain}"
+        }
+
+        env {
+          name  = "CLIENT_URL"
+          value = "https://www.soundplace.io"
+        }
+      }
+    }
+  }
+}
+
 resource "kubernetes_replication_controller" "data-api" {
   metadata {
     name = "data-api-pod"
