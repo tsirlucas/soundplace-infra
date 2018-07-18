@@ -29,3 +29,19 @@ resource "kubernetes_horizontal_pod_autoscaler" "stream-api" {
     }
   }
 }
+
+resource "kubernetes_horizontal_pod_autoscaler" "auth-api" {
+  metadata {
+    name = "auth-api-autoscaling"
+  }
+
+  spec {
+    max_replicas = 2
+    min_replicas = 1
+
+    scale_target_ref {
+      kind = "ReplicationController"
+      name = "${kubernetes_replication_controller.auth-api.metadata.0.name}"
+    }
+  }
+}

@@ -40,6 +40,11 @@ resource "kubernetes_replication_controller" "gateway-api" {
           name  = "STREAM_API_ENDPOINT"
           value = "${kubernetes_service.stream-api.load_balancer_ingress.0.ip}"
         }
+
+        env {
+          name  = "DATABASE_ENDPOINT"
+          value = "${var.database_endpoint}"
+        }
       }
     }
   }

@@ -45,5 +45,8 @@ RUN wget https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VE
 # GCloud Auth
 RUN gcloud auth activate-service-account --key-file ./.secrets/gcloud_auth.json
 
+# PSQL
+RUN apk --update add postgresql-client
+
 # Clear garbage
 RUN rm -rf .secrets

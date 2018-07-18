@@ -13,6 +13,15 @@ variable "credentials" {}
 #####################################################################
 # Modules
 #####################################################################
+
+data "http" "local_ip" {
+  url = "http://icanhazip.com"
+}
+
+locals {
+  local_ip = "${replace(data.http.local_ip.body, "\n", "")}"
+}
+
 module "gke" {
   source      = "./gke"
   project     = "${var.project}"
@@ -20,6 +29,16 @@ module "gke" {
   username    = "${var.username}"
   password    = "${var.password}"
   credentials = "${var.credentials}"
+}
+
+module "database" {
+  source = "./database"
+
+  username = "${var.username}"
+  password = "${var.password}"
+  region   = "${var.region}"
+  project  = "soundplace-infra"
+  local_ip = "${local.local_ip}"
 }
 
 module "k8s" {
@@ -33,4 +52,6 @@ module "k8s" {
   client_certificate     = "${module.gke.client_certificate}"
   client_key             = "${module.gke.client_key}"
   cluster_ca_certificate = "${module.gke.cluster_ca_certificate}"
+
+  database_endpoint = "${module.database.endpoint}"
 }
