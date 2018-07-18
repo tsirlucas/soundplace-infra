@@ -76,7 +76,7 @@ resource "kubernetes_service" "gateway-api" {
   }
 
   provisioner "local-exec" {
-    command = "kubectl apply -f modules/k8s/manual/gateway_ingress.yaml"
+    command = "kubectl apply -f modules/k8s/ingress/gateway_ingress.yaml"
   }
 
   provisioner "local-exec" {
