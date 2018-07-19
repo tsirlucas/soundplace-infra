@@ -20,7 +20,8 @@ RUN apk --no-cache add \
   git \
   sudo \
   zip \
-  unzip
+  unzip \
+  jq
 
 RUN wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GCLOUD_SDK_VERSION}-linux-x86_64.tar.gz &&\
   mv google-cloud-sdk-${GCLOUD_SDK_VERSION}-linux-x86_64.tar.gz /tmp/google-cloud-sdk.tar.gz &&\
