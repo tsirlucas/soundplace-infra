@@ -53,5 +53,6 @@ module "k8s" {
   client_key             = "${module.gke.client_key}"
   cluster_ca_certificate = "${module.gke.cluster_ca_certificate}"
 
-  database_endpoint = "${module.database.endpoint}"
+  database_endpoint   = "${module.database.endpoint}"
+  database_client_pem = "${module.database.client_ca_pem}"
 }

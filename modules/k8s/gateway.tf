@@ -42,8 +42,8 @@ resource "kubernetes_replication_controller" "gateway-api" {
         }
 
         env {
-          name  = "DATABASE_ENDPOINT"
-          value = "${var.database_endpoint}"
+          name  = "DATABASE_PEM"
+          value = "${var.database_client_pem}"
         }
       }
     }

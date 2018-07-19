@@ -14,3 +14,5 @@ variable "region" {}
 variable "project" {}
 
 variable "database_endpoint" {}
+
+variable "database_client_pem" {}

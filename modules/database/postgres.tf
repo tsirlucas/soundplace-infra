@@ -11,6 +11,8 @@ resource "google_sql_database_instance" "master" {
     tier = "db-f1-micro"
 
     ip_configuration {
+      require_ssl = true
+
       authorized_networks {
         name  = "everyone"
         value = "0.0.0.0/0"
@@ -44,5 +46,14 @@ resource "null_resource" "setup_database" {
       PGPASSWORD = "${google_sql_user.soundplace_database_user.password}"
       DATABASE   = "${google_sql_database.soundplace.name}"
     }
+  }
+}
+
+data "external" "pem_generator" {
+  program = ["bash", "modules/database/generate_pem.sh"]
+
+  query = {
+    project     = "${var.project}"
+    db_instance = "${google_sql_database_instance.master.name}"
   }
 }
