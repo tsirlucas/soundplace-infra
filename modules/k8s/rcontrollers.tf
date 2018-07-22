@@ -30,6 +30,31 @@ resource "kubernetes_replication_controller" "auth-api" {
           name  = "CLIENT_URL"
           value = "https://www.soundplace.io"
         }
+
+        env {
+          name  = "DATABASE_ENDPOINT"
+          value = "${var.database_endpoint}"
+        }
+
+        env {
+          name  = "DATABASE_NAME"
+          value = "${var.database_name}"
+        }
+
+        env {
+          name  = "DATABASE_USER"
+          value = "${var.username}"
+        }
+
+        env {
+          name  = "DATABASE_PASSWORD"
+          value = "${var.password}"
+        }
+
+        env {
+          name  = "DATABASE_PEM"
+          value = "${var.database_client_pem}"
+        }
       }
     }
   }
@@ -56,6 +81,36 @@ resource "kubernetes_replication_controller" "data-api" {
 
         port {
           container_port = 3000
+        }
+
+        env {
+          name  = "AUTH_API_ENDPOINT"
+          value = "${kubernetes_service.auth-api.load_balancer_ingress.0.ip}"
+        }
+
+        env {
+          name  = "DATABASE_ENDPOINT"
+          value = "${var.database_endpoint}"
+        }
+
+        env {
+          name  = "DATABASE_NAME"
+          value = "${var.database_name}"
+        }
+
+        env {
+          name  = "DATABASE_USER"
+          value = "${var.username}"
+        }
+
+        env {
+          name  = "DATABASE_PASSWORD"
+          value = "${var.password}"
+        }
+
+        env {
+          name  = "DATABASE_PEM"
+          value = "${var.database_client_pem}"
         }
       }
     }
