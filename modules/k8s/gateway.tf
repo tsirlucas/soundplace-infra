@@ -37,6 +37,11 @@ resource "kubernetes_replication_controller" "gateway-api" {
         }
 
         env {
+          name  = "GRAPHQL_API_ENDPOINT"
+          value = "${kubernetes_service.graphql-api.load_balancer_ingress.0.ip}"
+        }
+
+        env {
           name  = "STREAM_API_ENDPOINT"
           value = "${kubernetes_service.stream-api.load_balancer_ingress.0.ip}"
         }
