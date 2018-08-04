@@ -28,7 +28,7 @@ resource "google_container_cluster" "soundplace" {
   }
 
   provisioner "local-exec" {
-    command = "gcloud container clusters get-credentials soundplace --zone us-central1-b"
+    command = "gcloud container clusters get-credentials soundplace --zone us-central1-b --project ${var.project}"
   }
 }
 
