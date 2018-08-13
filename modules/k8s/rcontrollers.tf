@@ -32,6 +32,11 @@ resource "kubernetes_replication_controller" "auth-api" {
         }
 
         env {
+          name  = "DATA_API_ENDPOINT"
+          value = "${google_compute_address.data-api-address.address}"
+        }
+
+        env {
           name  = "DATABASE_ENDPOINT"
           value = "${var.database_endpoint}"
         }
@@ -85,7 +90,7 @@ resource "kubernetes_replication_controller" "data-api" {
 
         env {
           name  = "AUTH_API_ENDPOINT"
-          value = "${kubernetes_service.auth-api.load_balancer_ingress.0.ip}"
+          value = "${google_compute_address.auth-api-address.address}"
         }
 
         env {
@@ -142,7 +147,7 @@ resource "kubernetes_replication_controller" "graphql-api" {
 
         env {
           name  = "AUTH_API_ENDPOINT"
-          value = "${kubernetes_service.auth-api.load_balancer_ingress.0.ip}"
+          value = "${google_compute_address.auth-api-address.address}"
         }
 
         env {

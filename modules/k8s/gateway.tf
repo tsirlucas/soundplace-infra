@@ -3,6 +3,12 @@ resource "google_compute_global_address" "gateway-ingress-address" {
   project = "${var.project}"
 }
 
+resource "google_compute_address" "gateway-api-address" {
+  name    = "gateway-api-address"
+  region  = "${var.region}"
+  project = "${var.project}"
+}
+
 resource "kubernetes_replication_controller" "gateway-api" {
   metadata {
     name = "gateway-api-rc"
@@ -28,22 +34,22 @@ resource "kubernetes_replication_controller" "gateway-api" {
 
         env {
           name  = "AUTH_API_ENDPOINT"
-          value = "${kubernetes_service.auth-api.load_balancer_ingress.0.ip}"
+          value = "${google_compute_address.auth-api-address.address}"
         }
 
         env {
           name  = "DATA_API_ENDPOINT"
-          value = "${kubernetes_service.data-api.load_balancer_ingress.0.ip}"
+          value = "${google_compute_address.data-api-address.address}"
         }
 
         env {
           name  = "GRAPHQL_API_ENDPOINT"
-          value = "${kubernetes_service.graphql-api.load_balancer_ingress.0.ip}"
+          value = "${google_compute_address.graphql-api-address.address}"
         }
 
         env {
           name  = "STREAM_API_ENDPOINT"
-          value = "${kubernetes_service.stream-api.load_balancer_ingress.0.ip}"
+          value = "${google_compute_address.stream-api-address.address}"
         }
 
         env {
@@ -61,6 +67,8 @@ resource "kubernetes_service" "gateway-api" {
   }
 
   spec {
+    load_balancer_ip = "${google_compute_address.gateway-api-address.address}"
+
     selector {
       app = "${kubernetes_replication_controller.gateway-api.metadata.0.labels.app}"
     }
