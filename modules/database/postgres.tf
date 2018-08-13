@@ -1,5 +1,5 @@
 resource "random_id" "name" {
-  byte_length = 2
+  byte_length = 3
 }
 
 resource "google_sql_database_instance" "master" {
@@ -18,6 +18,11 @@ resource "google_sql_database_instance" "master" {
         value = "0.0.0.0/0"
       }
     }
+  }
+
+  provisioner "local-exec" {
+    when    = "destroy"
+    command = "rm .secrets/client_cert.pem"
   }
 
   project = "${var.project}"

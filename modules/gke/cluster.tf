@@ -28,7 +28,7 @@ resource "google_container_cluster" "soundplace" {
   }
 
   provisioner "local-exec" {
-    command = "gcloud container clusters get-credentials soundplace --zone us-central1-b"
+    command = "gcloud container clusters get-credentials soundplace --zone us-central1-b --project ${var.project}"
   }
 }
 
@@ -39,11 +39,11 @@ resource "google_container_node_pool" "primary-pool" {
   name               = "primary-pool"
   cluster            = "${google_container_cluster.soundplace.name}"
   zone               = "us-central1-b"
-  initial_node_count = 1
+  initial_node_count = 2
 
   node_config {
     preemptible  = true
-    machine_type = "n1-standard-1"
+    machine_type = "n1-highcpu-2"
 
     oauth_scopes = [
       "https://www.googleapis.com/auth/compute",
@@ -54,7 +54,7 @@ resource "google_container_node_pool" "primary-pool" {
   }
 
   autoscaling {
-    min_node_count = 1
+    min_node_count = 2
     max_node_count = 2
   }
 

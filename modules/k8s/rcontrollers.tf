@@ -8,6 +8,8 @@ resource "kubernetes_replication_controller" "auth-api" {
   }
 
   spec {
+    replicas = 2
+
     selector = {
       app = "auth-api-rc"
     }
@@ -29,6 +31,11 @@ resource "kubernetes_replication_controller" "auth-api" {
         env {
           name  = "CLIENT_URL"
           value = "https://www.soundplace.io"
+        }
+
+        env {
+          name  = "DATA_API_ENDPOINT"
+          value = "${google_compute_address.data-api-address.address}"
         }
 
         env {
@@ -70,6 +77,8 @@ resource "kubernetes_replication_controller" "data-api" {
   }
 
   spec {
+    replicas = 2
+
     selector = {
       app = "data-api-rc"
     }
@@ -85,7 +94,7 @@ resource "kubernetes_replication_controller" "data-api" {
 
         env {
           name  = "AUTH_API_ENDPOINT"
-          value = "${kubernetes_service.auth-api.load_balancer_ingress.0.ip}"
+          value = "${google_compute_address.auth-api-address.address}"
         }
 
         env {
@@ -127,6 +136,8 @@ resource "kubernetes_replication_controller" "graphql-api" {
   }
 
   spec {
+    replicas = 2
+
     selector = {
       app = "graphql-api-rc"
     }
@@ -142,7 +153,7 @@ resource "kubernetes_replication_controller" "graphql-api" {
 
         env {
           name  = "AUTH_API_ENDPOINT"
-          value = "${kubernetes_service.auth-api.load_balancer_ingress.0.ip}"
+          value = "${google_compute_address.auth-api-address.address}"
         }
 
         env {
@@ -184,6 +195,8 @@ resource "kubernetes_replication_controller" "stream-api" {
   }
 
   spec {
+    replicas = 2
+
     selector = {
       app = "stream-api-rc"
     }
