@@ -19,6 +19,8 @@ resource "kubernetes_replication_controller" "gateway-api" {
   }
 
   spec {
+    replicas = 2
+
     selector = {
       app = "gateway-api-rc"
     }

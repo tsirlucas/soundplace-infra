@@ -12,7 +12,7 @@ variable "GCLOUD_CREDENTIALS_PATH" {
 module "soundplace" {
   source = "./modules"
 
-  project     = "soundplace-infra"
+  project     = "soundplace-infra-v3"
   region      = "us-central1"
   username    = "${var.GENERAL_USER}"
   password    = "${var.GENERAL_PASSWORD}"
@@ -22,8 +22,8 @@ module "soundplace" {
 # Bucket for tfstate
 terraform {
   backend "gcs" {
-    bucket      = "soundplace-tfstate"
-    project     = "soundplace-infra"
+    bucket      = "soundplace-v3-tfstate"
+    project     = "soundplace-infra-v3"
     prefix      = "terraform.tfstate"
     credentials = ".secrets/gcloud_auth.json"
   }

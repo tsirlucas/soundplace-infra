@@ -37,7 +37,7 @@ module "database" {
   username = "${var.username}"
   password = "${var.password}"
   region   = "${var.region}"
-  project  = "soundplace-infra"
+  project  = "${var.project}"
   local_ip = "${local.local_ip}"
 }
 
@@ -47,7 +47,7 @@ module "k8s" {
   username = "${var.username}"
   password = "${var.password}"
   region   = "${var.region}"
-  project  = "soundplace-infra"
+  project  = "${var.project}"
 
   client_certificate     = "${module.gke.client_certificate}"
   client_key             = "${module.gke.client_key}"

@@ -8,6 +8,8 @@ resource "kubernetes_replication_controller" "auth-api" {
   }
 
   spec {
+    replicas = 2
+
     selector = {
       app = "auth-api-rc"
     }
@@ -75,6 +77,8 @@ resource "kubernetes_replication_controller" "data-api" {
   }
 
   spec {
+    replicas = 2
+
     selector = {
       app = "data-api-rc"
     }
@@ -132,6 +136,8 @@ resource "kubernetes_replication_controller" "graphql-api" {
   }
 
   spec {
+    replicas = 2
+
     selector = {
       app = "graphql-api-rc"
     }
@@ -189,6 +195,8 @@ resource "kubernetes_replication_controller" "stream-api" {
   }
 
   spec {
+    replicas = 2
+
     selector = {
       app = "stream-api-rc"
     }
